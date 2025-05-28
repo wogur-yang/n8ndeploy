@@ -1,0 +1,11 @@
+{
+  "name": "render-n8n-with-custom-node",
+  "version": "0.0.1",
+  "scripts": {
+    "build": "npm install n8n@latest && mkdir -p ~/.n8n/custom/nodes && git clone https://github.com/GiHnHn/n8n-nodes-youtube-transcript.git ~/.n8n/custom/nodes/n8n-nodes-youtube-transcript && cd ~/.n8n/custom/nodes/n8n-nodes-youtube-transcript && npm install && npm run build",
+    "start": "npx n8n start"
+  },
+  "dependencies": {
+    "n8n": "^1.97.0"    
+  }
+}
