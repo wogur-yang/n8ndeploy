@@ -9,22 +9,18 @@
 
 services:
   - name: n8n
-    type: web_service      # 코드 기반 Node.js 서비스로 선언합니다
+    type: web_service
     env: node
-    # 1) 커스텀 노드 클론 & 설치
-    # 2) n8n 패키지(프로젝트 루트) 설치
     buildCommand: |
-      # 사용자 홈 디렉토리에 custom 노드 설치 디렉토리 생성
       mkdir -p ~/.n8n/custom/nodes
-      # GitHub에서 소스 클론
       git clone https://github.com/yourusername/n8n-nodes-youtube-transcription-kasha.git \
         ~/.n8n/custom/nodes/n8n-nodes-youtube-transcription-kasha
-      # 커스텀 노드 의존성 설치
       cd ~/.n8n/custom/nodes/n8n-nodes-youtube-transcription-kasha && npm install
-      # 프로젝트 루트로 돌아와서 n8n 본체 설치
       cd $RENDER_REPO_ROOT && npm install
     startCommand: n8n
     envVars:
+      - key: N8N_CUSTOM_EXTENSIONS
+        value: /opt/render/project/.n8n/custom/nodes
       - key: N8N_ENCRYPTION_KEY
         generateValue: true
       - key: DB_TYPE
@@ -45,6 +41,7 @@ services:
         fromDatabase:
           name: n8n-db
           property: user
+
 
 databases:
   - name: n8n-db
