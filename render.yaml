@@ -1,38 +1,15 @@
-# Use this Blueprint to deploy n8n on Render as a web
-# service that uses a Postgres database to store
-# workflow data.
-#
-# This Blueprint uses free instance types (specified by
-# `plan`) for both the web service and the database. You
-# can upgrade to paid instance types at any time to
-# increase resources.
-
 services:
   - type: web
-    plan: free
-    # This is the runtime for services that pull a prebuilt Docker image
-    runtime: node
-    # You can give the service any name
     name: n8n-service
-    image:
-      # Pulls the n8n image tagged as latest from Docker Hub
-      url: docker.io/n8nio/n8n:latest
+    plan: free
 
-    # All environment variables defined below are required!
-    #
-    # You can define additional environment variables as needed.
+    # ← 여기를 image → node 로 바꿉니다
+    runtime: node
+
     envVars:
-      # Generates a base64-encoded key for
-      # encrypting credentials in n8n
-      #
-      # Do not modify this value after it's generated!
-      # If you do, you'll lose access to all credentials
-      # encrypted with the previous value.
       - key: N8N_ENCRYPTION_KEY
         generateValue: true
 
-      # These automatically populate connection details 
-      # for the Render Postgres database defined below
       - key: DB_TYPE
         value: postgresdb
       - key: DB_POSTGRESDB_DATABASE
@@ -52,25 +29,24 @@ services:
           name: n8n-db
           property: user
 
+      # n8n이 커스텀 노드를 찾는 디렉토리를 명시
+      - key: N8N_CUSTOM_NODES
+        value: /home/node/.n8n/custom/nodes
+
     buildCommand: |
+      # 1) n8n 본체 설치
       npm install
+
+      # 2) 커스텀 노드 클론 & 빌드
       mkdir -p /home/node/.n8n/custom/nodes
       git clone https://github.com/GiHnHn/n8n-nodes-youtube-transcript.git /home/node/.n8n/custom/nodes/n8n-nodes-youtube-transcript
       cd /home/node/.n8n/custom/nodes/n8n-nodes-youtube-transcript
       npm install
       npm run build
 
-    # 컨테이너 시작 시 n8n 실행
+    # 코드 베이스를 담은 채로 n8n을 시작
     startCommand: n8n start
 
 databases:
   - name: n8n-db
     plan: free
-    # The free instance type is limited to 1 GB of disk
-    # space.
-    #
-    # If you later upgrade to a paid instance type, you can
-    # increase the disk size to any multiple of 5 GB by
-    # setting the `diskSizeGB` property.
-    #
-    # diskSizeGB: 5
