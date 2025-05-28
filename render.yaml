@@ -13,6 +13,12 @@ services:
     # This is the runtime for services that pull a prebuilt Docker image
     runtime: image
     # You can give the service any name
+    buildCommand: |
+      git clone https://github.com/yourusername/n8n-nodes-youtube-transcription-kasha.git ~/.n8n/custom/nodes/n8n-nodes-youtube-transcription-kasha \
+      && cd ~/.n8n/custom/nodes/n8n-nodes-youtube-transcription-kasha \
+      && npm install \
+      && cd $RENDER_REPO_ROOT \
+      && npm install
     name: n8n-service
     image:
       # Pulls the n8n image tagged as latest from Docker Hub
