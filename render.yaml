@@ -52,17 +52,16 @@ services:
           name: n8n-db
           property: user
 
-buildCommand: |
-  # 1) 기존 n8n 설치
-  npm install
-  # 2) 커스텀 노드 클론(또는 복사) & 의존성 설치
-  mkdir -p ~/.n8n/custom/nodes
-  git clone https://github.com/GiHnHn/n8n-nodes-youtube-transcript.git \
-    ~/.n8n/custom/nodes/n8n-nodes-youtube-transcript
-  cd ~/.n8n/custom/nodes/n8n-nodes-youtube-transcript
-  npm install
-  # 3) (원래) n8n 빌드/설치 스텝
-  npm run build
+    buildCommand: |
+      npm install
+      mkdir -p /home/node/.n8n/custom/nodes
+      git clone https://github.com/GiHnHn/n8n-nodes-youtube-transcript.git /home/node/.n8n/custom/nodes/n8n-nodes-youtube-transcript
+      cd /home/node/.n8n/custom/nodes/n8n-nodes-youtube-transcript
+      npm install
+      npm run build
+
+    # 컨테이너 시작 시 n8n 실행
+    startCommand: n8n start
 
 databases:
   - name: n8n-db
