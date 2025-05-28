@@ -11,7 +11,7 @@ services:
   - type: web
     plan: free
     # This is the runtime for services that pull a prebuilt Docker image
-    runtime: image
+    runtime: node
     # You can give the service any name
     name: n8n-service
     image:
