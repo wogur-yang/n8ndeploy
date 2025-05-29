@@ -33,16 +33,10 @@ services:
       - key: N8N_CUSTOM_NODES
         value: /home/node/.n8n/custom/nodes
 
-    buildCommand: |
-      # 1) n8n 본체 설치
-      npm install
-
-      # 2) 커스텀 노드 클론 & 빌드
-      mkdir -p /home/node/.n8n/custom/nodes
-      git clone https://github.com/GiHnHn/n8n-nodes-youtube-transcript.git /home/node/.n8n/custom/nodes/n8n-nodes-youtube-transcript
-      cd /home/node/.n8n/custom/nodes/n8n-nodes-youtube-transcript
-      npm install
-      npm run build
+    preDeployCommand: |
+        mkdir -p ~/.n8n/custom/nodes && \
+        git clone --depth 1 https://github.com/GiHnHn/n8n-youtube-transcript-node \
+        ~/.n8n/custom/nodes/n8n-youtube-transcript-node || true
 
     # 코드 베이스를 담은 채로 n8n을 시작
     startCommand: n8n start
