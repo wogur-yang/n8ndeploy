@@ -32,9 +32,3 @@ jobs:
           tags: |
             ${{ env.IMAGE_NAME }}:${{ env.TAG }}
             ${{ env.IMAGE_NAME }}:${{ github.sha }}
-
-      - name: Trigger Render redeploy
-        if: ${{ success() && secrets.RENDER_HOOK }}
-        run: curl -X POST "$RENDER_HOOK"
-        env:
-          RENDER_HOOK: ${{ secrets.RENDER_HOOK }}
