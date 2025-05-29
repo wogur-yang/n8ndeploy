@@ -1,14 +1,16 @@
 # 1) n8n 공식 이미지를 베이스로 사용
 FROM n8nio/n8n:latest
 
-# 2) 커스텀 노드 소스코드를 컨테이너에 복사
-#    (레포 내에 n8n-nodes-youtube-transcript 디렉토리가 있다고 가정)
+# 1) 커스텀 노드 복사
 COPY n8n-youtube-transcript-node /home/node/.n8n/custom/nodes/n8n-youtube-transcript-node
 
-# 3) 커스텀 노드 폴더로 이동하여 의존성 설치 및 빌드
+# 2) 의존성 설치 (devDependencies 포함)
 RUN cd /home/node/.n8n/custom/nodes/n8n-youtube-transcript-node \
-    && npm install \
-    && npm run build
+    && npm install                 # --production 제거
+    && npm run build               # rimraf + tsc + gulp 실행
+
+# 3) n8n 실행 (기본 ENTRYPOINT 유지)
+
 
 # 4) (선택) env 파일이나 시크릿으로 관리하지 않을 환경변수 기본값 설정
 #    ENV N8N_CUSTOM_NODES=/home/node/.n8n/custom/nodes
