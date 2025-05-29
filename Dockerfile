@@ -6,7 +6,7 @@ FROM n8nio/n8n:latest
 COPY n8n-youtube-transcript-node /home/node/.n8n/custom/nodes/n8n-youtube-transcript-node
 
 # 3) 커스텀 노드 폴더로 이동하여 의존성 설치 및 빌드
-RUN cd /home/node/.n8n/custom/nodes/n8n-nodes-youtube-transcript \
+RUN cd /home/node/.n8n/custom/nodes/n8n-youtube-transcript-node \
     && npm install \
     && npm run build
 
