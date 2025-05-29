@@ -4,7 +4,7 @@ services:
     plan: free
 
     # ← 여기를 image → node 로 바꿉니다
-    runtime: node
+    runtime: image
     preDeployCommand: |
       mkdir -p /home/node/.n8n/custom/nodes
       git clone --depth 1 https://github.com/GiHnHn/n8n-youtube-transcript-node /home/node/.n8n/custom/nodes/n8n-youtube-transcript-node || true
@@ -32,6 +32,8 @@ services:
         fromDatabase:
           name: n8n-db
           property: user
+      - key: N8N_CUSTOM_EXTENSIONS
+          value: /home/node/.n8n/custom/nodes
 
       # n8n이 커스텀 노드를 찾는 디렉토리를 명시
       - key: N8N_CUSTOM_NODES
