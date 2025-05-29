@@ -6,7 +6,7 @@ on:
   workflow_dispatch: {}
 
 env:
-  IMAGE_NAME: gihnhn/n8n-custom   # ← 본인 Docker Hub ID/리포로 변경
+  IMAGE_NAME: gksrlgjs0767/n8n-custom
   TAG: latest
 
 jobs:
