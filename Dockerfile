@@ -6,8 +6,8 @@ COPY n8n-youtube-transcript-node /home/node/.n8n/custom/nodes/n8n-youtube-transc
 
 # 2) 의존성 설치 (devDependencies 포함)
 RUN cd /home/node/.n8n/custom/nodes/n8n-youtube-transcript-node \
-    && npm install                 # --production 제거
-    && npm run build               # rimraf + tsc + gulp 실행
+    && npm install \
+    && npm run build
 
 # 3) n8n 실행 (기본 ENTRYPOINT 유지)
 
