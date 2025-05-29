@@ -4,7 +4,7 @@ services:
     plan: free
 
     # ← 여기를 image → node 로 바꿉니다
-    runtime: image
+    runtime: node
     preDeployCommand: |
       mkdir -p /home/node/.n8n/custom/nodes
       git clone --depth 1 https://github.com/GiHnHn/n8n-youtube-transcript-node /home/node/.n8n/custom/nodes/n8n-youtube-transcript-node || true
