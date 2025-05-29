@@ -3,9 +3,9 @@
   "version": "1.2.1",
   "description": "Fetch transcript from a youtube video",
   "main": "dist/youtube-transcript.common.js",
-  "browser": "dist/youtube-transcript.esm.js",
   "module": "dist/youtube-transcript.esm.js",
-  "types": "dist/index.d.ts",
+  "types": "dist/index.d.ts"
+  "browser": "dist/youtube-transcript.esm.js",
   "scripts": {
     "build": "rollup -c"
   },
