@@ -6,7 +6,7 @@ import type {
   INodeExecutionData,
 } from 'n8n-workflow';
 // 로컬 라이브러리 실제 경로에 맞게 조정
-import { YoutubeTranscript } from 'youtube-transcript_custom/dist/youtube-transcript.esm.js';
+import { YoutubeTranscript } from 'youtube-transcript_custom';
 
 export class YoutubeTranscriptNode implements INodeType {
   description: INodeTypeDescription = {
