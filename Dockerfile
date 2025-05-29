@@ -1,22 +1,14 @@
-# 1) n8n 공식 이미지를 베이스로 사용
 FROM n8nio/n8n:latest
 
-# 1) 커스텀 노드 복사
-COPY n8n-youtube-transcript-node /home/node/.n8n/custom/nodes/n8n-youtube-transcript-node
+# 1) 커스텀 노드 복사 (root 권한으로 복사됨)
+COPY n8n-youtube-transcript-node \
+     /home/node/.n8n/custom/nodes/n8n-youtube-transcript-node
 
-# 2) 의존성 설치 (devDependencies 포함)
+# 2) 권한 수정 + 의존성 설치 + 빌드
+USER root
+RUN chown -R node:node /home/node/.n8n/custom/nodes
+
+USER node
 RUN cd /home/node/.n8n/custom/nodes/n8n-youtube-transcript-node \
-    && npm install \
+    && npm install --unsafe-perm \
     && npm run build
-
-# 3) n8n 실행 (기본 ENTRYPOINT 유지)
-
-
-# 4) (선택) env 파일이나 시크릿으로 관리하지 않을 환경변수 기본값 설정
-#    ENV N8N_CUSTOM_NODES=/home/node/.n8n/custom/nodes
-
-# 5) 기본 ENTRYPOINT가 이미 ["n8n"] 이므로,
-#    도커 허브의 n8n 이미지를 그대로 사용해도 됩니다.
-#    (만약 npx n8n start 를 쓰고 싶으면 아래 두 줄을 주석 해제)
-# ENTRYPOINT ["npx", "n8n", "start"]
-# CMD []
